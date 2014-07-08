@@ -1,4 +1,4 @@
-# This is the root ITK CMakeList file: 
+# This is the root ITK CMakeList file:
 cmake_minimum_required(VERSION 2.6)
 
 # This project is designed to be built outside the Insight source tree.
@@ -6,7 +6,11 @@ PROJECT(GUI)
 
 ## Find Libraries ##
 # find package(libraryName /QUIET /REQUIRED) generate variables containing the library way
-# include(${VariableName}) 
+# include(${VariableName})
+
+# Find ITK (requires a version of ITK containing ITKVTKGlue)
+find_package(ITK REQUIRED)
+include(${ITK_USE_FILE})
 
 # Find ITK (requires a version of ITK containing ITKVTKGlue)
 find_package(ITK REQUIRED)
@@ -36,4 +40,6 @@ SET(Window_HEADERS DaughterWindow.h)
 # EXECUTABLE
 ADD_EXECUTABLE(GUI ${MOC_SOURCES} ${UI_SOURCES} ${Window_SOURCES} ${Window_HEADERS})
 
-TARGET_LINK_LIBRARIES(GUI  ${QT_LIBRARIES} ${ITK_LIBRARIES} ${VTK_LIBRARIES} ${ItkVtkGlue_LIBRARIES} QVTK)
+TARGET_LINK_LIBRARIES(GUI ${QT_LIBRARIES} ${ITK_LIBRARIES} ${VTK_LIBRARIES} ${ItkVtkGlue_LIBRARIES} QVTK)
+
+

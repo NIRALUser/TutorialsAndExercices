@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+<category>Filtering.Arithmetic</category>
+<title>Median Image Filtering</title>
+<description>Median filter of a image</description>
+
+<parameters>
+	<label>IO</label>
+	<description>Input/Output parameters</description> 
+
+	<image>
+		<name>input</name>
+		<label>image input</label>
+		<channel>image</channel>
+		<index>0</index>
+		<description>image input</description>
+	</image>
+	
+	<image>
+		<name>output</name>
+		<label>image output</label>
+		<channel>image</channel>
+		<index>1</index>
+		<description>image output</description>
+	</image>
+
+	<integer>
+		<name>radius</name>
+		<longflag>radius</longflag>
+		<label>radius</label>
+		<default>2</default>
+		<description>radius value</description>
+	</integer>
+
+</parameters>
+
+</executable>
+
