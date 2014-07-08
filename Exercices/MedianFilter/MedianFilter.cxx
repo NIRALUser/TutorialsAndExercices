@@ -3,7 +3,7 @@
 #include "itkImageFileWriter.h"
 #include "itkMedianImageFilter.h"
 #include "MedianFilterCLP.h"
-#include "itkImageBase.h"
+#include "stdlib.h"
 
 int main(int argc, char *argv[])
 {	
@@ -22,12 +22,18 @@ int main(int argc, char *argv[])
 	typedef itk::MedianImageFilter <ImageType, ImageType> FilterType;
 	FilterType::Pointer medianFilter=FilterType::New();
 	FilterType::InputSizeType filterRadius;
-	filterRadius.Fill(2);
-    	if(argc > 2)
+	
+    	if(radius < 1)
     	{
-        	filterRadius.Fill(radius);
+        	std::cout<<"Radius value must be non-zero positive integer. Set by default to 2."<<std::endl;
+		 
+		filterRadius.Fill(2);
     	}
-    	medianFilter->SetRadius(filterRadius);
+	else
+	{
+		filterRadius.Fill(radius);
+	}
+	medianFilter->SetRadius(filterRadius);
     	medianFilter->SetInput( reader->GetOutput() );
 	
 	//Output Image
