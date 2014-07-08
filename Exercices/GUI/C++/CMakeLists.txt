@@ -8,21 +8,18 @@ PROJECT(GUI)
 # find package(libraryName /QUIET /REQUIRED) generate variables containing the library way
 # include(${VariableName}) 
 
+# Find ITK (requires a version of ITK containing ITKVTKGlue)
+find_package(ITK REQUIRED)
+include(${ITK_USE_FILE})
+
 # Find VTK
-find_package(VTK 5.10 REQUIRED)
+find_package(VTK 5.10 REQUIRED NO_MODULE)
 include(${VTK_USE_FILE})
 
 # Find QT
 find_package(Qt4 REQUIRED)
 INCLUDE (${QT_USE_FILE})
 
-# Find ITK
-find_package(ITK REQUIRED)
-include(${ITK_USE_FILE})
-
-# Find ItkVtkGlue
-#find_package(ItkVtkGlue REQUIRED)
-#include(${ItkVtkGlue_USE_FILE})
 
 # MotherWindow.h generation
 QT4_WRAP_UI(UI_SOURCES MotherWindow.ui)
