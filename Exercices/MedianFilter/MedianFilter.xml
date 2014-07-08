@@ -12,7 +12,7 @@
 		<name>input</name>
 		<label>image input</label>
 		<channel>image</channel>
-		<index>1</index>
+		<index>0</index>
 		<description>image input</description>
 	</image>
 	
@@ -26,8 +26,7 @@
 
 	<integer>
 		<name>radius</name>
-		<label>radius value</label>
-		<index>1</index>
+		<longflag>radius</longflag>
 		<description>radius value</description>
 	</integer>
 

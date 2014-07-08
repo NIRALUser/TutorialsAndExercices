@@ -3,6 +3,7 @@
 #include "itkImageFileWriter.h"
 #include "itkMedianImageFilter.h"
 #include "MedianFilterCLP.h"
+#include "itkImageBase.h"
 
 int main(int argc, char *argv[])
 {	
@@ -24,7 +25,7 @@ int main(int argc, char *argv[])
 	filterRadius.Fill(2);
     	if(argc > 2)
     	{
-        	filterRadius.Fill(atoi(argv[3]));
+        	filterRadius.Fill(radius);
     	}
     	medianFilter->SetRadius(filterRadius);
     	medianFilter->SetInput( reader->GetOutput() );
