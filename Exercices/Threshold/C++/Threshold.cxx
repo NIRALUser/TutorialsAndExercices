@@ -7,9 +7,6 @@
 int main(int argc, char *argv[])
 {	
 	PARSE_ARGS;	
-
-	//Seuil//
-	int Threshold=atoi(argv[3]);
  
 	//Image Type//
 	typedef itk::Image<unsigned char, 3> ImageType;
@@ -17,7 +14,7 @@ int main(int argc, char *argv[])
 	//Input Image//
 	typedef itk::ImageFileReader<ImageType> ReaderType; 
 	ReaderType::Pointer reader = ReaderType::New(); 
-	reader->SetFileName(argv[1]); 
+	reader->SetFileName(input); 
 
 	//Threshold Filtering//
 	typedef itk::BinaryThresholdImageFilter <ImageType, ImageType> FilterType;
@@ -25,7 +22,7 @@ int main(int argc, char *argv[])
 	
 	thresholdFilter->SetInput(reader->GetOutput());
 
-	thresholdFilter->SetLowerThreshold(Threshold);
+	thresholdFilter->SetLowerThreshold(threshold);
 	thresholdFilter->SetUpperThreshold(255);
 
 	thresholdFilter->SetOutsideValue(0); 
@@ -35,6 +32,6 @@ int main(int argc, char *argv[])
 	typedef itk::ImageFileWriter<ImageType> WriterType;  
 	WriterType::Pointer writer = WriterType::New(); 
 	writer->SetInput(thresholdFilter->GetOutput()); 
-	writer->SetFileName(argv[2]);
+	writer->SetFileName(output);
 	writer->Update(); 
 }

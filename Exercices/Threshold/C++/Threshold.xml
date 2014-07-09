@@ -12,7 +12,7 @@
 		<name>input</name>
 		<label>image input</label>
 		<channel>image</channel>
-		<index>1</index>
+		<index>0</index>
 		<description>image input</description>
 	</image>
 	
@@ -27,7 +27,8 @@
 	<integer>
 		<name>threshold</name>
 		<label>threshold value</label>
-		<index>1</index>
+		<index>2</index>
+		<default>2</default>
 		<description>threshold value</description>
 	</integer>
 
