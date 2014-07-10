@@ -11,7 +11,7 @@
   <image>
     <name>input</name>
     <label>image input</label>
-    <channel>image</channel>
+    <channel>input</channel>
     <index>0</index>
     <description>image input</description>
   </image>
@@ -19,7 +19,7 @@
   <image>
     <name>output</name>
     <label>image output</label>
-    <channel>image</channel>
+    <channel>output</channel>
     <index>1</index>
     <description>image output</description>
   </image>
