@@ -5,31 +5,36 @@
 <description>Binary threshold of a image</description>
 
 <parameters>
-	<label>IO</label>
-	<description>Input/Output parameters</description> 
+  <label>IO</label>
+  <description>Input/Output parameters</description> 
 
-	<image>
-		<name>input</name>
-		<label>image input</label>
-		<channel>image</channel>
-		<index>1</index>
-		<description>image input</description>
-	</image>
-	
-	<image>
-		<name>output</name>
-		<label>image output</label>
-		<channel>image</channel>
-		<index>1</index>
-		<description>image output</description>
-	</image>
+  <image>
+    <name>input</name>
+    <label>image input</label>
+    <channel>input</channel>
+    <index>0</index>
+    <description>image input</description>
+  </image>
+  
+  <image>
+    <name>output</name>
+    <label>image output</label>
+    <channel>output</channel>
+    <index>1</index>
+    <description>image output</description>
+  </image>
 
-	<integer>
-		<name>threshold</name>
-		<label>threshold value</label>
-		<index>1</index>
-		<description>threshold value</description>
-	</integer>
+  <integer>
+    <name>threshold</name>
+    <label>threshold value</label>
+    <longflag>threshold</longflag>
+    <flag>t</flag>
+    <description>threshold value</description>
+    <constraints>
+      <minimum>0</minimum>
+      <maximum>255</maximum>
+    </constraints>
+  </integer>
 
 </parameters>
 
