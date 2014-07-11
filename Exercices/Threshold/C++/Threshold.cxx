@@ -17,9 +17,19 @@ int main(int argc, char *argv[])
 
   //Input Image//
   typedef itk::ImageFileReader<ImageType> ReaderType; 
-  ReaderType::Pointer reader = ReaderType::New(); 
-  reader->SetFileName(input); 
-
+  ReaderType::Pointer reader = ReaderType::New();
+  reader->SetFileName(input);
+  
+  try
+  {
+    reader->Update();
+  }
+  catch(itk::ExceptionObject &err)
+  {
+    return EXIT_FAILURE;
+  }
+   
+  
   //Threshold Filtering//
   typedef itk::BinaryThresholdImageFilter <ImageType, ImageType> FilterType;
   FilterType::Pointer thresholdFilter=FilterType::New(); 
@@ -37,6 +47,13 @@ int main(int argc, char *argv[])
   WriterType::Pointer writer = WriterType::New(); 
   writer->SetInput(thresholdFilter->GetOutput()); 
   writer->SetFileName(output);
-  writer->Update(); 
-  return 0;
+  try
+  {
+    writer->Update();
+  }
+  catch(itk::ExceptionObject &err)
+  {
+    return EXIT_FAILURE;
+  } 
+  return EXIT_SUCCESS ;
 }
