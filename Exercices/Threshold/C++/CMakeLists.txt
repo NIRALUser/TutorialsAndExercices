@@ -4,22 +4,27 @@ cmake_minimum_required(VERSION 2.8)
 # This project is designed to be built outside the Insight source tree.
 project(Threshold)
 
-# Find Slicer3
+# Find SlicerExecutionModel
 find_package(SlicerExecutionModel REQUIRED)
 include(${SlicerExecutionModel_USE_FILE})
-
-# Find GenerateCLP
-find_package(GenerateCLP REQUIRED)
-include(${GenerateCLP_USE_FILE})
  
 # Find ITK
 find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})
+SEMMacroBuildCLI(
+  NAME Threshold
+  EXECUTABLE_ONLY
+  TARGET_LIBRARIES ${ITK_LIBRARIES}
+  LINK_DIRECTORIES ${ITK_LIBRARY_DIRS}
+  INCLUDE_DIRECTORIES ${ITK_INCLUDE_DIR}
+  )
 
-set(Threshold_SOURCE Threshold.cxx)
-GENERATECLP(Threshold_SOURCE Threshold.xml) 
 
-add_executable(Threshold ${Threshold_SOURCE})
+option(BUILD_TESTING "Build the testing tree" ON)
 
-target_link_libraries(Threshold ${ITK_LIBRARIES})
+IF(BUILD_TESTING)
+  include(CTest)
+  ADD_SUBDIRECTORY(Testing)
+ENDIF(BUILD_TESTING)
+
 
