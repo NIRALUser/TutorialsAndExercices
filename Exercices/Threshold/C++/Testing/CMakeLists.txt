@@ -4,9 +4,9 @@ set(Data Data)
 set(TEMP_DIR ${Threshold_BINARY_DIR}/Testing/Temporary )
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${Data} )
 
-set(Output1 ${SOURCE_DIR}/outputT2-30.nrrd )
-set(Output2 ${SOURCE_DIR}/outputT2-200.nrrd )
-set(OutputTrash ${SOURCE_DIR}/outputThrash.nrrd )
+set(Baseline1 ${SOURCE_DIR}/outputT2-30.nrrd )
+set(Baseline2 ${SOURCE_DIR}/outputT2-200.nrrd )
+set(Trash ${SOURCE_DIR}/trash.nrrd )
 set(Input ${SOURCE_DIR}/inputT2.nrrd )
 include_directories( ${CMAKE_SOURCE_DIR} )
 add_executable(ThresholdTest ThresholdTest.cxx)
@@ -37,7 +37,7 @@ set_tests_properties( ThresholdLimitMinTest PROPERTIES WILL_FAIL true )
 #Test checking that a wrong input will prevent the program from running
 add_test(NAME WrongInputTest COMMAND $<TARGET_FILE:Threshold>
   WrongInput.nrrd
-  ${OutputTrash}
+  ${trash}
   -t 20
 )
 set_tests_properties( WrongInputTest PROPERTIES WILL_FAIL true )
@@ -46,8 +46,8 @@ set_tests_properties( WrongInputTest PROPERTIES WILL_FAIL true )
 
 add_test(NAME ThresholdTest COMMAND $<TARGET_FILE:ThresholdTest>
   --compare
+    ${Baseline1}
     ${ThresholdTestResult}
-    ${Output1}
   ModuleEntryPoint
     ${Input}
     ${ThresholdTestResult}
@@ -56,8 +56,8 @@ add_test(NAME ThresholdTest COMMAND $<TARGET_FILE:ThresholdTest>
 
 add_test(NAME ThresholdTest2 COMMAND $<TARGET_FILE:ThresholdTest>
   --compare
+    ${Baseline2}
     ${ThresholdTestResult}
-    ${Output2}
   ModuleEntryPoint
     ${Input}
     ${ThresholdTestResult}
