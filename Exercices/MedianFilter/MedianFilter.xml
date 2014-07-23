@@ -27,9 +27,12 @@
 	<integer>
 		<name>radius</name>
 		<longflag>radius</longflag>
+    <flag>r</flag>
 		<label>radius</label>
-		<default>2</default>
 		<description>radius value</description>
+    <constraints>
+      <minimum>1</minimum>
+    </constraints>
 	</integer>
 
 </parameters>

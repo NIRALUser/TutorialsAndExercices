@@ -19,22 +19,19 @@
 #include "stdlib.h"
 #include "itkImageIOBase.h"
 
-void GetImageType ( std::string fileName , 
-                  itk::ImageIOBase::IOComponentType &componentType )
+void GetImageType ( std::string fileName , itk::ImageIOBase::IOComponentType &componentType )
 {
   typedef itk::Image< unsigned char, 3 > ImageType ;
-  itk::ImageFileReader<ImageType>::Pointer imageReader =
-                itk::ImageFileReader< ImageType >::New() ;
+  itk::ImageFileReader<ImageType>::Pointer imageReader = itk::ImageFileReader< ImageType >::New() ;
   imageReader->SetFileName( fileName.c_str() ) ;
   imageReader->UpdateOutputInformation() ;
   componentType = imageReader->GetImageIO()->GetComponentType() ;
 }
 
 template< class TImage >
-int ReadImage( const char* fileName ,
-               typename TImage::Pointer image )
+int ReadImage( const char* fileName , typename TImage::Pointer& image )
 {
-  typedef TImage                            ImageType ;
+  typedef TImage ImageType ;
   typedef itk::ImageFileReader< ImageType > ImageReaderType ;
   typename ImageReaderType::Pointer reader = ImageReaderType::New() ;
   reader->SetFileName( fileName ) ;
@@ -47,48 +44,42 @@ int ReadImage( const char* fileName ,
     std::cerr << e.what() << std::endl ;
     return 1 ;
   }
-  image->Graft( reader->GetOutput() ) ;
+  image = reader->GetOutput() ;
   return 0 ;
 }
 /* Creates the Median Filter and the output image with the input type. */
 template< class ComponentType >
-int MedianFilter( std::string inputFileName , std::string outputFileName ,
-               int radius )
+int MedianFilter( std::string inputFileName , std::string outputFileName , int radius )
 { 
   typedef itk::Image< ComponentType , 3 > ImageType ;
-	typedef itk::MedianImageFilter < ImageType , ImageType > FilterType ;
-	typename FilterType::Pointer medianFilter = FilterType::New() ;
-	typename FilterType::InputSizeType filterRadius ;
+  typedef itk::MedianImageFilter < ImageType , ImageType > FilterType ;
+  typename FilterType::Pointer medianFilter = FilterType::New() ;
+  typename FilterType::InputSizeType filterRadius ;
   typename ImageType::Pointer image = ImageType::New() ;
+  if( radius < 1 )
+  {
+    std::cout << "Radius value must be non-zero positive integer." << std::endl ;
+    return EXIT_FAILURE ;
+  }
   if( ReadImage< ImageType >( inputFileName.c_str() , image ) )
   {
     std::cout << "Image could not be read." << std::endl ;
     return EXIT_FAILURE ;
   }
-	
-	if( radius < 1 )
-	{
-  	std::cout << "Radius value must be non-zero positive integer. Set by default to 2." << std::endl ;
-		filterRadius.Fill( 2 ) ;
-	}
-	else
-	{
-		filterRadius.Fill( radius ) ;
-	}
-	medianFilter->SetRadius( filterRadius ) ;
+  filterRadius.Fill( radius ) ;
+  medianFilter->SetRadius( filterRadius ) ;
   medianFilter->SetInput( image ) ;
-	
-	typedef itk::ImageFileWriter< ImageType > WriterType ;  
-	typename WriterType::Pointer writer = WriterType::New() ; 
-	writer->SetInput( medianFilter->GetOutput() ) ; 
-	writer->SetFileName( outputFileName ) ;
-	writer->Update() ; 
+  typedef itk::ImageFileWriter< ImageType > WriterType ;  
+  typename WriterType::Pointer writer = WriterType::New() ; 
+  writer->SetInput( medianFilter->GetOutput() ) ; 
+  writer->SetFileName( outputFileName ) ;
+  writer->Update() ; 
   return EXIT_SUCCESS ;
 }
 
 int main( int argc , char *argv[] )
-{	
-	PARSE_ARGS ;
+{
+  PARSE_ARGS ;
   itk::ImageIOBase::IOPixelType pixelType ;
   itk::ImageIOBase::IOComponentType componentType ;
   try
