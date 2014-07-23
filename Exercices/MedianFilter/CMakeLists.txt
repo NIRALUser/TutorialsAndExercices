@@ -19,3 +19,11 @@ SEMMacroBuildCLI(
   TARGET_LIBRARIES ${ITK_LIBRARIES}
   )
 
+option(BUILD_TESTING "Build the testing tree" ON)
+
+IF(BUILD_TESTING)
+  include(CTest)
+  ADD_SUBDIRECTORY(Testing)
+ENDIF(BUILD_TESTING)
+
+
